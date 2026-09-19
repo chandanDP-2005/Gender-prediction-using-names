@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NameSense NLP</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<header>
+
+<div class="logo">
+<span>●</span>
+NameSense <b>NLP</b>
+</div>
+
+<div class="online">
+<span></span>
+NLP MODEL ONLINE
+</div>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+<div class="tag">
+✦ NATURAL LANGUAGE PROCESSING PROJECT
+</div>
+
+<h1>
+Predict Gender<br>
+<span>Using Names</span>
+</h1>
+
+<p>
+An NLP-based character-level system that studies
+linguistic patterns, prefixes, suffixes and character
+n-grams to predict the gender class associated with a name.
+</p>
+
+<div class="technologies">
+
+<span>Python</span>
+<span>Flask</span>
+<span>NLP</span>
+<span>Character N-Grams</span>
+<span>Machine Learning</span>
+
+</div>
+
+</section>
+
+
+<section class="cards">
+
+
+<!-- INPUT CARD -->
+
+<div class="card">
+
+<div class="card-title">
+
+<div>
+
+<small>01 / INPUT</small>
+
+<h2>Enter a Name</h2>
+
+</div>
+
+<div class="icon">
+✦
+</div>
+
+</div>
+
+
+<form id="form">
+
+<label>Name</label>
+
+<div class="input-box">
+
+<span>⌁</span>
+
+<input
+id="name"
+type="text"
+placeholder="Enter a name..."
+autocomplete="off"
+>
+
+<button
+type="button"
+id="clear">
+×
+</button>
+
+</div>
+
+
+<div class="examples">
+
+<button type="button">Chandan</button>
+<button type="button">Basavaraj</button>
+<button type="button">Layashree</button>
+<button type="button">Harshitha</button>
+
+</div>
+
+
+<button
+class="predict"
+type="submit">
+
+Analyze Name
+
+<span>→</span>
+
+</button>
+
+</form>
+
+
+<p class="warning">
+
+ⓘ This is a pattern-based NLP prediction and
+does not determine a person's actual gender.
+
+</p>
+
+</div>
+
+
+
+<!-- RESULT CARD -->
+
+<div class="card result">
+
+<div class="card-title">
+
+<div>
+
+<small>02 / PREDICTION</small>
+
+<h2>Model Output</h2>
+
+</div>
+
+<div id="status"
+class="status">
+WAITING
+</div>
+
+</div>
+
+
+<div id="waiting"
+class="waiting">
+
+<div class="loader">
+
+<div></div>
+
+<span>NLP</span>
+
+</div>
+
+<h3>Ready to analyze</h3>
+
+<p>
+Enter a name and let the NLP model analyze
+its character patterns.
+</p>
+
+</div>
+
+
+<div id="result"
+class="result-content hidden">
+
+<div class="prediction">
+
+<div id="genderIcon"
+class="gender-icon">
+M
+</div>
+
+<div>
+
+<h3 id="gender">
+Male
+</h3>
+
+<p>Predicted class</p>
+
+</div>
+
+<div class="confidence">
+
+<strong id="confidence">
+0%
+</strong>
+
+<small>
+CONFIDENCE
+</small>
+
+</div>
+
+</div>
+
+
+<div class="main-progress">
+
+<div id="mainProgress"></div>
+
+</div>
+
+
+<div class="probabilities">
+
+<div>
+
+<div>
+Male
+<strong id="male">
+0%
+</strong>
+</div>
+
+<div class="progress">
+<i id="maleBar"></i>
+</div>
+
+</div>
+
+
+<div>
+
+<div>
+Female
+<strong id="female">
+0%
+</strong>
+</div>
+
+<div class="progress">
+<i id="femaleBar"></i>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- NLP ANALYSIS -->
+
+<section
+id="analysis"
+class="card analysis hidden">
+
+<div class="card-title">
+
+<div>
+
+<small>03 / NLP ANALYSIS</small>
+
+<h2>What the Model Sees</h2>
+
+</div>
+
+<div class="model-label">
+CHARACTER LEVEL NLP
+</div>
+
+</div>
+
+
+<div class="features">
+
+<div>
+<small>NAME LENGTH</small>
+<strong id="length">-</strong>
+</div>
+
+<div>
+<small>FIRST CHARACTER</small>
+<strong id="first">-</strong>
+</div>
+
+<div>
+<small>LAST CHARACTER</small>
+<strong id="last">-</strong>
+</div>
+
+<div>
+<small>NORMALIZED TEXT</small>
+<strong id="normalized">-</strong>
+</div>
+
+</div>
+
+
+<div class="token-area">
+
+<div>
+
+<label>PREFIXES</label>
+
+<div id="prefixes"
+class="tokens">
+</div>
+
+</div>
+
+
+<div>
+
+<label>SUFFIXES</label>
+
+<div id="suffixes"
+class="tokens">
+</div>
+
+</div>
+
+
+<div>
+
+<label>CHARACTER 2-GRAMS</label>
+
+<div id="bigrams"
+class="tokens">
+</div>
+
+</div>
+
+
+<div>
+
+<label>CHARACTER 3-GRAMS</label>
+
+<div id="trigrams"
+class="tokens">
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- HOW IT WORKS -->
+
+<section class="bottom">
+
+<div class="card">
+
+<small>HOW IT WORKS</small>
+
+<div class="pipeline">
+
+<div>
+<b>01</b>
+<strong>Normalize</strong>
+<span>Clean text</span>
+</div>
+
+<i>→</i>
+
+<div>
+<b>02</b>
+<strong>Tokenize</strong>
+<span>N-grams</span>
+</div>
+
+<i>→</i>
+
+<div>
+<b>03</b>
+<strong>Classify</strong>
+<span>Probability</span>
+</div>
+
+<i>→</i>
+
+<div>
+<b>04</b>
+<strong>Predict</strong>
+<span>Result</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card statistics">
+
+<small>TRAINING DATA</small>
+
+<strong id="total">
+—
+</strong>
+
+<span>names</span>
+
+<div>
+
+Male:
+<b id="maleCount">—</b>
+
+&nbsp;&nbsp;
+
+Female:
+<b id="femaleCount">—</b>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+NameSense NLP · Gender Prediction Using Names ·
+Academic NLP Project
+
+</footer>
+
+
+<script
+src="{{ url_for('static', filename='script.js') }}">
+</script>
+
+</body>
+
+</html>
